@@ -1,0 +1,23 @@
+.form {
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.form__button {
+  margin-bottom: 50px;
+  border: none;
+  background-color: transparent;
+  font-size: 22px;
+  text-align: start;
+  padding: 0;
+  color: rgb(175, 175, 175);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form__button:hover {
+  color: black;
+}

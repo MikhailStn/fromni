@@ -1,0 +1,21 @@
+.registration__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.registration__input {
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid rgb(185, 185, 185);
+  max-width: 500px;
+  padding: 10px;
+  outline: none;
+  font-size: 16px;
+}
+
+.text-danger {
+  height: 15px;
+  color: brown;
+  font-size: 14px;
+}
