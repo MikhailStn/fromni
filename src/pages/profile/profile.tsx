@@ -2,12 +2,14 @@ import "./profile.css";
 import { Header } from "../../components/header/header";
 import { Registration } from "../../components/registration/registration";
 import { useAppSelector } from "../../app/hooks";
+import { SplashScreen } from "../../components/splashScreen/splashScreen";
 
 export function Profile() {
   const state = useAppSelector((state) => state.currentUser);
   const currentUser = useAppSelector((state) => state.currentUser);
   return (
     <div>
+      <SplashScreen/>
       <Header />
       <main className="main">
         {!state.isAuth ? (

@@ -35,7 +35,7 @@
 }
 
 .header__button {
-  margin-left: auto;
+  margin-left: 20px;
   width: 80px;
   height: 40px;
   border: 1px solid #005aa3;
@@ -54,4 +54,12 @@
 .header__button_disabled {
   pointer-events: none;
   border: 1px solid #a7a7a7;
+}
+
+.header__curr_user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
 }

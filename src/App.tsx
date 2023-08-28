@@ -15,7 +15,8 @@ export function App() {
   }, []);
 
   window.location.pathname == "/channels" ? dispatch(setActiveChannels()) : dispatch(setActiveProfile());
-
+  window.location.pathname == "/settings" ? dispatch(setActiveChannels()) : false;
+  
   return (
     <BrowserRouter>
       <Routes>

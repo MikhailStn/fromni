@@ -5,6 +5,37 @@ const currentUserSlice = createSlice({
   initialState: {
     currentUser: {
       email: "",
+      channels: [
+        {
+          name: "vk",
+          isActive: false,
+          message: "",
+          keyboard: "",
+          quickButtons: [],
+          urlButtons: [],
+        },
+        {
+          name: "telegram",
+          isActive: false,
+          message: "",
+          keyboard: "",
+          quickButtons: [],
+          urlButtons: [],
+        },
+        {
+          name: "whatsapp",
+          isActive: false,
+          message: "",
+          keyboard: "",
+          quickButtons: [],
+          urlButtons: [],
+        },
+        {
+          name: "sms",
+          isActive: false,
+          message: "",
+        },
+      ],
     },
     isAuth: false,
   },
@@ -13,9 +44,43 @@ const currentUserSlice = createSlice({
       state.currentUser = action.payload;
       state.isAuth = true;
     },
+    changeMessage(state, action) {
+      state.currentUser.channels[action.payload.index].message = action.payload.message;
+    },
     logOut(state) {
       (state.currentUser = {
         email: "",
+        channels: [
+          {
+            name: "vk",
+            isActive: false,
+            message: "",
+            keyboard: "",
+            quickButtons: [],
+            urlButtons: [],
+          },
+          {
+            name: "telegram",
+            isActive: false,
+            message: "",
+            keyboard: "",
+            quickButtons: [],
+            urlButtons: [],
+          },
+          {
+            name: "whatsapp",
+            isActive: false,
+            message: "",
+            keyboard: "",
+            quickButtons: [],
+            urlButtons: [],
+          },
+          {
+            name: "sms",
+            isActive: false,
+            message: "",
+          },
+        ],
       }),
         (state.isAuth = false);
     },
@@ -23,4 +88,4 @@ const currentUserSlice = createSlice({
 });
 
 export default currentUserSlice.reducer;
-export const { changeCurrentUser, logOut } = currentUserSlice.actions;
+export const { changeCurrentUser, logOut, changeMessage } = currentUserSlice.actions;

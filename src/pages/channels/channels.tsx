@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { channels } from "../../data/channels";
 import { Link } from "react-router-dom";
 import { setChannel } from "../../store/currentChannel";
+import { Switch } from "@mui/material";
 
 export function Channels() {
   const dispatch = useAppDispatch();
@@ -25,7 +26,8 @@ export function Channels() {
                   <div className="channel" key={el.id}>
                     <img className="channel__logo" src={el.logo}></img>
                     <p className="channel__name">{el.name}</p>
-                    <p className="channel__status">Статус: Не активно</p>
+                    <p className="channel__status">Статус: <Switch></Switch></p>
+                    <p>Отключен</p>
                     <button className="channel__button button" onClick={() => dispatch(setChannel(el.id))}>
                       <Link className="channel__link" to="/settings">
                         Настроить

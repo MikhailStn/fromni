@@ -19,3 +19,12 @@
   color: brown;
   font-size: 14px;
 }
+
+.registration__sub {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.registration__info {
+  font-size: 24px;
+}

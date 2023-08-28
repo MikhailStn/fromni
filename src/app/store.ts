@@ -3,12 +3,14 @@ import headerSlice from "../store/headerSlice";
 import currentUserSlice from "../store/currentUserSlice";
 import registrationInputSlice from "../store/registrationInputSlice";
 import channelSlice from "../store/currentChannel";
+import splashScreen from "../store/splashScreen";
 
 const rootReducer = combineReducers({
   headerNav: headerSlice,
   currentUser: currentUserSlice,
   reg: registrationInputSlice,
   channel: channelSlice,
+  splash: splashScreen,
 });
 
 export const store = configureStore({

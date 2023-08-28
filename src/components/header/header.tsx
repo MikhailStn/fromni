@@ -8,6 +8,7 @@ export function Header() {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.headerNav);
   const isAuth = useAppSelector((state) => state.currentUser.isAuth);
+  const email = useAppSelector((state) => state.currentUser.currentUser.email);
   return (
     <div className="header__container">
       <header className="header">
@@ -21,7 +22,7 @@ export function Header() {
                   dispatch(setActiveProfile());
                 }}
               >
-                Мой профиль
+                Мессенджеры
               </Link>
             </li>
             <li className="header__nav_item">
@@ -37,6 +38,7 @@ export function Header() {
             </li>
           </ul>
         </nav>
+        <p className="header__curr_user">{isAuth ? email : ""}</p>
         <button
           className={isAuth ? "header__button" : "header__button header__button_disabled"}
           disabled={isAuth ? false : true}
