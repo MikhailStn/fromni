@@ -60,7 +60,21 @@ export const addChannel = (token: string, message: string, quickButtons: string[
       store.dispatch(hideSplash());
     } catch (e: any) {
       store.dispatch(hideSplash());
-      return e.response.data.message;
+      alert(e.response.data.message);
+    }
+  };
+};
+
+export const removeBtn = (token: string, message: string, quickButtons: string[], urlButtons: string[], keyboard: string, key: string) => {
+  store.dispatch(showSplash());
+  return async function dispatch() {
+    try {
+      const response = await axios.put("http://localhost:5000/remove-button", { token, message, quickButtons, urlButtons, keyboard, key });
+      store.dispatch(changeCurrentUser(response.data.user));
+      store.dispatch(hideSplash());
+    } catch (e: any) {
+      store.dispatch(hideSplash());
+      alert(e.response.data.message);
     }
   };
 };

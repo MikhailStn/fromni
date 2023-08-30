@@ -1,32 +1,21 @@
 import "./form.css";
 import { channels } from "../../data/channels";
 import { useNavigate } from "react-router-dom";
-import { addChannel } from "../../requests/requests";
+import { addChannel, removeBtn } from "../../requests/requests";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { changeMessage } from "../../store/currentUserSlice";
 import { RadioGroup, FormControl, FormControlLabel, Radio } from "@mui/material";
 import { useRef, useState } from "react";
+import { isValidUrl } from "../../functions";
 
 type Props = {
   id: string;
 };
 
-const isValidUrl = (urlString: string) => {
-  const urlPattern = new RegExp(
-    "^(https?:\\/\\/)?" +
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-      "((\\d{1,3}\\.){3}\\d{1,3}))" +
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-      "(\\?[;&a-z\\d%_.~+=-]*)?" +
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
-  );
-  return !!urlPattern.test(urlString);
-};
-
 export let index = 0;
 
 export function Form(props: Props) {
+  let index = 0;
   const state = useAppSelector((state) => state.currentUser.currentUser);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -34,26 +23,20 @@ export function Form(props: Props) {
   const [inputUrl, showUrlInput] = useState({ display: "none", border: "1px solid gray" });
   const [inputQuickValue, changeQuickInput] = useState("");
   const [inputUrlValue, changeUrlInput] = useState("");
+  const [error, setError] = useState("");
   const inputQuickRef = useRef<HTMLInputElement | null>(null);
   const inputUrlRef = useRef<HTMLInputElement | null>(null);
+  const messageRef = useRef<HTMLInputElement>(null);
   let channel = {
     id: "",
     name: "",
     logo: "",
   };
   let max = 0;
-  let quickMaxStandart = 0
-  //let urlMaxStandart = 0
-  let quickMaxInline = 0
-  //let urlMaxInline = 0
-  const quickBtns = state.channels[index].quickButtons?.slice(0);
-  const urlBtns = state.channels[index].urlButtons?.slice(0);
   if (props.id == "vk") {
     channel = channels[0];
     index = 0;
     max = 4096;
-    quickMaxStandart = 40;
-    quickMaxInline = 10;
   } else if (props.id == "telegram") {
     channel = channels[1];
     index = 1;
@@ -68,6 +51,17 @@ export function Form(props: Props) {
     max = 1000;
   }
   const [keyboard, setKeyboard] = useState(state.channels[index].keyboard);
+  let placeholder = "Ответ";
+  let maxBtnVal = 1000;
+  if (props.id == "whatsapp") {
+    placeholder = "Ответ (макс: 20)";
+    maxBtnVal = 20;
+  } else if (props.id == "telegram" && keyboard == "inline") {
+    placeholder = "Ответ (макс: 64)";
+    maxBtnVal = 64;
+  }
+  const quickBtns = state.channels[index].quickButtons?.slice(0);
+  const urlBtns = state.channels[index].urlButtons?.slice(0);
   return (
     <form className="form">
       <button
@@ -83,6 +77,7 @@ export function Form(props: Props) {
         <p style={index == 3 ? { display: "none" } : { display: "flex" }}>Текст сообщения (Макс: {max})</p>
         <p style={index == 3 ? { display: "flex" } : { display: "none" }}>Текст сообщения</p>
         <input
+          ref={messageRef}
           maxLength={max}
           type="text"
           name="text-message"
@@ -104,9 +99,10 @@ export function Form(props: Props) {
                   e.preventDefault();
                   let index = quickBtns.indexOf(el);
                   quickBtns.splice(index, 1);
-                  dispatch(
-                    addChannel(localStorage.getItem("token") || "", state.channels[index].message, quickBtns, urlBtns, keyboard, props.id)
-                  );
+                  if (messageRef.current)
+                    dispatch(
+                      removeBtn(localStorage.getItem("token") || "", messageRef.current.value, quickBtns, urlBtns, keyboard, props.id)
+                    );
                 }}
               >
                 x
@@ -125,9 +121,10 @@ export function Form(props: Props) {
                   e.preventDefault();
                   let index = urlBtns.indexOf(el);
                   urlBtns.splice(index, 1);
-                  dispatch(
-                    addChannel(localStorage.getItem("token") || "", state.channels[index].message, quickBtns, urlBtns, keyboard, props.id)
-                  );
+                  if (messageRef.current)
+                    dispatch(
+                      removeBtn(localStorage.getItem("token") || "", messageRef.current.value, quickBtns, urlBtns, keyboard, props.id)
+                    );
                 }}
               >
                 x
@@ -168,7 +165,9 @@ export function Form(props: Props) {
             + Быстрый ответ
           </button>
           <button
-            style={index == 3 ? { display: "none" } : {}}
+            style={
+              index == 3 || (index == 2 && keyboard == "standart") || (index == 1 && keyboard == "standart") ? { display: "none" } : {}
+            }
             className="form__button button"
             onClick={(e) => {
               e.preventDefault();
@@ -187,7 +186,8 @@ export function Form(props: Props) {
           value={inputQuickValue}
           type="text"
           name="add-quick"
-          placeholder="Ответ"
+          maxLength={maxBtnVal}
+          placeholder={placeholder}
           onChange={(e) => {
             changeQuickInput(e.target.value);
           }}
@@ -210,6 +210,7 @@ export function Form(props: Props) {
           }}
         ></input>
       </div>
+      <p className="form__sumbit_err">{error}</p>
       <button
         className="form__button button"
         onClick={(e) => {
@@ -230,6 +231,7 @@ export function Form(props: Props) {
           for (let i = 0; i < urlBtns.length; i++) {
             if (inputUrlRef.current?.value == urlBtns[i]) {
               showUrlInput({ display: "flex", border: "1px solid red" });
+              showQuickInput({ display: "none", border: "1px solid gray" });
               return;
             } else {
               showUrlInput({ display: "flex", border: "1px solid gray" });
@@ -245,6 +247,7 @@ export function Form(props: Props) {
           changeUrlInput("");
           showQuickInput({ display: "none", border: "1px solid gray" });
           showUrlInput({ display: "none", border: "1px solid gray" });
+          setError("");
         }}
       >
         Сохранить

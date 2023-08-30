@@ -116,3 +116,9 @@
   padding: 10px;
   box-sizing: border-box;
 }
+
+
+.form__sumbit_err {
+  color: red;
+  height: 20px;
+}
