@@ -11,29 +11,32 @@ const currentUserSlice = createSlice({
           isActive: false,
           message: "",
           keyboard: "",
-          quickButtons: [],
-          urlButtons: [],
+          quickButtons: [""] || undefined,
+          urlButtons: [""] || undefined,
         },
         {
           name: "telegram",
           isActive: false,
           message: "",
           keyboard: "",
-          quickButtons: [],
-          urlButtons: [],
+          quickButtons: [""] || undefined,
+          urlButtons: [""] || undefined,
         },
         {
           name: "whatsapp",
           isActive: false,
           message: "",
           keyboard: "",
-          quickButtons: [],
-          urlButtons: [],
+          quickButtons: [""] || undefined,
+          urlButtons: [""] || undefined,
         },
         {
           name: "sms",
           isActive: false,
           message: "",
+          keyboard: "",
+          quickButtons: [""] || undefined,
+          urlButtons: [""] || undefined,
         },
       ],
     },
@@ -47,6 +50,9 @@ const currentUserSlice = createSlice({
     changeMessage(state, action) {
       state.currentUser.channels[action.payload.index].message = action.payload.message;
     },
+    changeIsActive(state, action) {
+      state.currentUser.channels[action.payload.index].isActive = action.payload.isActive;
+    },
     logOut(state) {
       (state.currentUser = {
         email: "",
@@ -56,29 +62,32 @@ const currentUserSlice = createSlice({
             isActive: false,
             message: "",
             keyboard: "",
-            quickButtons: [],
-            urlButtons: [],
+            quickButtons: [""],
+            urlButtons: [""],
           },
           {
             name: "telegram",
             isActive: false,
             message: "",
             keyboard: "",
-            quickButtons: [],
-            urlButtons: [],
+            quickButtons: [""],
+            urlButtons: [""],
           },
           {
             name: "whatsapp",
             isActive: false,
             message: "",
             keyboard: "",
-            quickButtons: [],
-            urlButtons: [],
+            quickButtons: [""],
+            urlButtons: [""],
           },
           {
             name: "sms",
             isActive: false,
             message: "",
+            keyboard: "",
+            quickButtons: [""],
+            urlButtons: [""],
           },
         ],
       }),
@@ -88,4 +97,4 @@ const currentUserSlice = createSlice({
 });
 
 export default currentUserSlice.reducer;
-export const { changeCurrentUser, logOut, changeMessage } = currentUserSlice.actions;
+export const { changeCurrentUser, logOut, changeMessage, changeIsActive } = currentUserSlice.actions;

@@ -9,3 +9,58 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+.profile__channels {
+  display: flex;
+  column-gap: 40px;
+  flex-wrap: wrap;
+  row-gap: 40px;
+}
+
+.profile__item {
+  min-width: 300px;
+  min-height: 300px;
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 5px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.profile__subtitle {
+  font-size: 18px;
+  padding: 40px 0;
+}
+
+.profile__btns {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 10px;
+  align-items: center;
+}
+
+.profile__btn {
+  background-color: transparent;
+  border-radius: 5px;
+  height: 30px;
+  border: 1px solid rgb(207, 207, 207);
+  outline: none;
+  box-sizing: border-box;
+  max-width: 200px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.profile__quick_btn {
+  max-width: 100px;
+}
+
+.profile__sub_name {
+  font-weight: 700;
+}

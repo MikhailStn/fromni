@@ -22,7 +22,7 @@ export function Header() {
                   dispatch(setActiveProfile());
                 }}
               >
-                Мессенджеры
+                Мой профиль
               </Link>
             </li>
             <li className="header__nav_item">
