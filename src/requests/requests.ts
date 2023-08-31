@@ -7,7 +7,7 @@ export const registration = (email: string, password: string) => {
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.post("http://localhost:5000/registration", { email, password });
+      const response = await axios.post("https://fromi-api.onrender.com/registration", { email, password });
       localStorage.setItem("token", response.data.token);
       store.dispatch(changeCurrentUser(response.data.user));
       store.dispatch(hideSplash());
@@ -23,7 +23,7 @@ export const login = (email: string, password: string) => {
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.post("http://localhost:5000/login", { email, password });
+      const response = await axios.post("https://fromi-api.onrender.com/login", { email, password });
       localStorage.setItem("token", response.data.token);
       store.dispatch(changeCurrentUser(response.data.user));
       store.dispatch(hideSplash());
@@ -39,7 +39,7 @@ export const auth = () => {
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.get("http://localhost:5000/auth", {
+      const response = await axios.get("https://fromi-api.onrender.com/auth", {
         headers: { Authorization: localStorage.getItem("token") },
       });
       store.dispatch(changeCurrentUser(response.data.user));
@@ -55,7 +55,7 @@ export const addChannel = (token: string, message: string, quickButtons: string[
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.put("http://localhost:5000/add-channel", { token, message, quickButtons, urlButtons, keyboard, key });
+      const response = await axios.put("https://fromi-api.onrender.com/add-channel", { token, message, quickButtons, urlButtons, keyboard, key });
       store.dispatch(changeCurrentUser(response.data.user));
       store.dispatch(hideSplash());
     } catch (e: any) {
@@ -69,7 +69,7 @@ export const removeBtn = (token: string, message: string, quickButtons: string[]
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.put("http://localhost:5000/remove-button", { token, message, quickButtons, urlButtons, keyboard, key });
+      const response = await axios.put("https://fromi-api.onrender.com/remove-button", { token, message, quickButtons, urlButtons, keyboard, key });
       store.dispatch(changeCurrentUser(response.data.user));
       store.dispatch(hideSplash());
     } catch (e: any) {
@@ -83,7 +83,7 @@ export const changeChannel = (token: string, isActive: boolean, key: string) => 
   store.dispatch(showSplash());
   return async function dispatch() {
     try {
-      const response = await axios.put("http://localhost:5000/set-channel", { token, isActive, key });
+      const response = await axios.put("https://fromi-api.onrender.com/set-channel", { token, isActive, key });
       store.dispatch(changeCurrentUser(response.data.user));
       store.dispatch(hideSplash());
     } catch (e: any) {
